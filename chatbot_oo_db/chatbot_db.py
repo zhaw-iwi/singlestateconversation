@@ -1,6 +1,5 @@
 import openai
-openai.api_key = "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"
-openai.organization = "org-URhHRj9qqmQqR8yZZNJcRClX"
+openai.api_key = "..."
 
 from chatbot_db_helper import ChatbotDBHelper
 
