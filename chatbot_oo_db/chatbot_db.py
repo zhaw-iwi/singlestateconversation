@@ -54,9 +54,10 @@ class Chatbot:
         self._append_assistant(response)
         return response
 
-    def response_for(self, request):
-        if request:
-            self._append_user(request)
-            response = self._openai()
-            self._append_assistant(response)
-            return response
+    def response_for(self, user_says):
+        if user_says is None:
+            raise RuntimeError("user_says must not be None")
+        self._append_user(user_says)
+        assistant_says = self._openai()
+        self._append_assistant(assistant_says)
+        return assistant_says

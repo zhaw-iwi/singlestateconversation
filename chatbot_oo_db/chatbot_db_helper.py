@@ -22,7 +22,7 @@ class ChatbotDBHelper:
         try:
             self._connection = sqlite3.connect(database)
         except sqlite3.Error as e:
-            raise RuntimeError from e
+            raise RuntimeError(" ".join(e.args))
         
         if not self._ddl_exists():
             if type_role is None or instance_context is None or instance_starter is None:
@@ -106,7 +106,8 @@ class ChatbotDBHelper:
         result = result.fetchall()
         self._connection.commit()
         for row in result:
-            messages.append({"role": row[0], "content": row[1]})
+            if (not with_system and row[0] != ChatbotDBHelper._sytem_label):
+                messages.append({"role": row[0], "content": row[1]})
         return messages
 
     def starter_save(self):
