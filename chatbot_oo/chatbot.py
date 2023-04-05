@@ -1,13 +1,14 @@
 import openai
-openai.api_key = "..."
+openai.api_key = "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"
+openai.organization = "org-URhHRj9qqmQqR8yZZNJcRClX"
 
 class Chatbot:
     _default_role = "You are a kind, respectful, and sympathetic coach."
     _default_starter = "Create a short prompt to greet the user."
 
-    def __init__(self, global_role=_default_role):
+    def __init__(self, role=_default_role):
         self._messages = []
-        self._append_system(global_role)
+        self._append_system(role)
 
     def _append_system(self, content):
         self._messages.append({"role": "system", "content": content})
@@ -39,6 +40,6 @@ class Chatbot:
         if user_says is None:
             raise RuntimeError("user_says must not be None")
         self._append_user(user_says)
-        response = self._openai()
-        self._append_assistant(response)
-        return response
+        assistant_says = self._openai()
+        self._append_assistant(assistant_says)
+        return assistant_says
