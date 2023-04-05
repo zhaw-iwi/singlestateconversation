@@ -11,7 +11,7 @@ class ChatbotDBHelper:
     _chatbot_instance_table = "chatbot_instances"
     _chatbot_session_table = "chatbot_sessions"
 
-    def __init__(self, database, type_id, user_id, type_role=None, instance_context=None, instance_starter=None):
+    def __init__(self, database, type_id, user_id, type_name=None, type_role=None, instance_context=None, instance_starter=None):
 
         if type_id is None:
             raise RuntimeError("a type_id must be provided - either refer to an existing one or for a new one to be created")
@@ -22,16 +22,16 @@ class ChatbotDBHelper:
         try:
             self._connection = sqlite3.connect(database)
         except sqlite3.Error as e:
-            raise RuntimeError from e
+            raise RuntimeError(" ".join(e.args))
         
         if not self._ddl_exists():
-            if type_role is None or instance_context is None or instance_starter is None:
-                raise RuntimeError("since we are creating a new database instance you must provide a type_role, instance_context, and instance_starter")                  
+            if type_name is None or type_role is None or instance_context is None or instance_starter is None:
+                raise RuntimeError("since we are creating a new database instance you must provide a type_name, type_role, instance_context, and instance_starter")                  
             self._ddl_save()
         if not self._type_exists(type_id):
-            if type_role is None:
-                raise RuntimeError("since we are creating a new chatbot type you must provide a type_role")
-            self._type_save(type_id, type_role)
+            if type_name is None or type_role is None:
+                raise RuntimeError("since we are creating a new chatbot type you must provide a type_name and type_role")
+            self._type_save(type_id, type_name, type_role)
         if not self._instance_exists(type_id, user_id):
             if instance_context is None or instance_starter is None:
                 raise RuntimeError("since we are creating a new chatbot instance you must provide a instance_context and instance_starter")
@@ -42,9 +42,9 @@ class ChatbotDBHelper:
 
     def _ddl_save(self):
         cursor = self._connection
-        cursor.execute("CREATE TABLE " + ChatbotDBHelper._chatbot_type_table + " (id TEXT PRIMARY KEY, role TEXT NOT NULL)")
+        cursor.execute("CREATE TABLE " + ChatbotDBHelper._chatbot_type_table + " (id TEXT PRIMARY KEY, name TEXT NOT NULL, role TEXT NOT NULL)")
         cursor.execute("CREATE TABLE " + ChatbotDBHelper._chatbot_instance_table + " (type TEXT NOT NULL, user TEXT NOT NULL, context TEXT NOT NULL, starter TEXT NOT NULL, PRIMARY KEY(type, user), FOREIGN KEY (type) REFERENCES " + ChatbotDBHelper._chatbot_type_table + "(id))")
-        cursor.execute("CREATE TABLE " + ChatbotDBHelper._chatbot_session_table + " (id INTEGER PRIMARY KEY, type TEXT NOT NULL, user TEXT NOT NULL, t TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, who_says TEXT NOT NULL, says_what TEXT NOT NULL, FOREIGN KEY (type, user) REFERENCES " + ChatbotDBHelper._chatbot_instance_table + "(type, user))")
+        cursor.execute("CREATE TABLE " + ChatbotDBHelper._chatbot_session_table + " (id INTEGER PRIMARY KEY, type TEXT NOT NULL, user TEXT NOT NULL, t TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, who_says TEXT NOT NULL, says_what TEXT NOT NULL, is_deleted BOOLEAN DEFAULT (0), FOREIGN KEY (type, user) REFERENCES " + ChatbotDBHelper._chatbot_instance_table + "(type, user))")
         self._connection.commit()
     
     def _ddl_exists(self):
@@ -58,10 +58,10 @@ class ChatbotDBHelper:
         self._connection.commit()
         return (result_type and result_instance and result_session)
     
-    def _type_save(self, type_id, role):
+    def _type_save(self, type_id, name, role):
         role_normalised = re.sub(r"\s+", " ", role).strip()
         cursor = self._connection
-        cursor.execute("INSERT INTO " + ChatbotDBHelper._chatbot_type_table + " (id, role) VALUES (\"" + type_id + "\", \"" + role_normalised + "\")")
+        cursor.execute("INSERT INTO " + ChatbotDBHelper._chatbot_type_table + " (id, name, role) VALUES (\"" + type_id + "\", \"" + name + "\", \"" + role_normalised + "\")")
         self._connection.commit()
     
     def _type_exists(self, type_id):
@@ -89,6 +89,13 @@ class ChatbotDBHelper:
         self._connection.commit()
         return len(result) == 1
 
+    def info_retrieve(self):
+        cursor = self._connection
+        result = cursor.execute("SELECT t.name, t.role, i.context FROM " + ChatbotDBHelper._chatbot_type_table + " t, " + ChatbotDBHelper._chatbot_instance_table + " i WHERE t.id = i.type AND type = \"" + self._type_id + "\" AND user = \"" + self._user_id + "\"")
+        result = result.fetchone()
+        self._connection.commit()
+        return {"name": result[0], "role": result[1], "context": result[2]}
+
     def messages_retrieve(self, with_system=False):
         cursor = self._connection
         messages = []
@@ -102,17 +109,22 @@ class ChatbotDBHelper:
             result = result.fetchone()
             messages.append({"role": ChatbotDBHelper._sytem_label, "content": result[0]})
         # retrieve session utterances
-        result = cursor.execute("SELECT who_says, says_what FROM " + ChatbotDBHelper._chatbot_session_table + " WHERE type = \"" + self._type_id + "\" AND user = \"" + self._user_id + "\" ORDER BY t ASC")
+        result = cursor.execute("SELECT who_says, says_what FROM " + ChatbotDBHelper._chatbot_session_table + " WHERE type = \"" + self._type_id + "\" AND user = \"" + self._user_id + "\" AND is_deleted = 0 ORDER BY t, id ASC")
         result = result.fetchall()
         self._connection.commit()
         for row in result:
-            messages.append({"role": row[0], "content": row[1]})
+            if not with_system:
+                if row[0] != ChatbotDBHelper._sytem_label:
+                    messages.append({"role": row[0], "content": row[1]})
+            else:
+                messages.append({"role": row[0], "content": row[1]})
         return messages
 
     def starter_save(self):
         cursor = self._connection
         result = cursor.execute("SELECT starter FROM " + ChatbotDBHelper._chatbot_instance_table + " WHERE type = \"" + self._type_id + "\" AND user = \"" + self._user_id + "\"")
         result = result.fetchone()
+        self._connection.commit()
         self.message_save(ChatbotDBHelper._sytem_label, result[0])
 
     def message_save(self, who_says, says_what):
@@ -122,4 +134,8 @@ class ChatbotDBHelper:
         result = cursor.execute(statement, (self._type_id, self._user_id, who_says, says_what_normalised))
         self._connection.commit()
         return result.lastrowid
-        
+    
+    def reset(self):
+        cursor = self._connection
+        cursor.execute("UPDATE " + ChatbotDBHelper._chatbot_session_table + " SET is_deleted = 1 WHERE type = \"" + self._type_id + "\" AND user = \"" + self._user_id + "\" AND is_deleted = 0")
+        self._connection.commit()
