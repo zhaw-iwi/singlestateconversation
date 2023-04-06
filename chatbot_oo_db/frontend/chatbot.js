@@ -10,6 +10,12 @@ $(document).ready(function() {
     session = session_from_url();
     get_info();
     get_conversation();
+    $("#user_says_input").keypress(function(event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            user_says();
+        }
+    });
 });
 
 function session_from_url() {
@@ -53,11 +59,15 @@ function show_conversation(conversation)    {
             $("#messages").append(current_message);
         }
     });
-    $('html,body').animate({ scrollTop: 9999 }, 'slow');
+    $('html,body').animate({scrollTop: document.body.scrollHeight}, 'slow');
 }
 
-function show_user_says_temp(user_says_what)    {
+function show_user_says_incremental(user_says_what)    {
     $('#messages').append(get_user_message(user_says_what));
+}
+
+function show_assistant_says_incremental(assistant_says_what)    {
+    $('#messages').append(get_assistant_message(assistant_says_what));
 }
 
 function start_assistant_istyping_temp()  {
@@ -73,6 +83,7 @@ function stop_assistant_istyping_temp() {
         clearInterval(animate_istyping_interval);
         animate_istyping_interval = null;
     }
+    $(".temporary").remove();
 }
 
 function get_assistant_message(content) {
@@ -85,7 +96,7 @@ function get_assistant_message(content) {
 }
 
 function get_assistant_istyping_message() {
-    return $("<div>").addClass("d-flex flex-row justify-content-start mb-4").append(
+    return $("<div>").addClass("temporary d-flex flex-row justify-content-start mb-4").append(
         $("<i>").addClass("bi bi-emoji-sunglasses").attr("style", "font-size: 2rem;"),
         $("<div>").addClass("p-3 ms-3 border border-secondary").attr("style", "border-radius: 15px;").append(
             $("<p>").addClass("small mb-0").append(
@@ -121,8 +132,9 @@ function user_says()    {
         return;
     }
     $("#user_says_input").val("");
-    show_user_says_temp(user_says_what);
+    show_user_says_incremental(user_says_what);
     start_assistant_istyping_temp()
+    $('html,body').animate({scrollTop: document.body.scrollHeight}, 'fast');
     $.ajax({
 		type: "POST",
 		url: "response_for",
@@ -131,7 +143,8 @@ function user_says()    {
 		dataType: "json",
 		success: function(data)	{
             stop_assistant_istyping_temp();
-			get_conversation();
+			show_assistant_says_incremental(data.assistant_says);
+            $('html,body').animate({scrollTop: document.body.scrollHeight}, 'fast');
 		},
 		failure: function(errMsg) { alert(errMsg); }
 	});
