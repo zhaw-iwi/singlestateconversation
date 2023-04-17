@@ -1,8 +1,10 @@
-
-# A very simple Flask Hello World app for you to get started with...
+# A simple Flask chat app for you to get started with...
 
 from flask import Flask,jsonify,request,render_template
 from chatbot_db import Chatbot
+
+PYTHONANYWHERE_USERNAME = "aldespin"
+PYTHONANYWHERE_WEBAPPNAME = "chatbot"
 
 app = Flask(__name__)
 
@@ -17,7 +19,7 @@ def chatbot(type_id, user_id):
 @app.route('/<type_id>/<user_id>/info')
 def info_retrieve(type_id, user_id):
     bot = Chatbot(
-        database_file="/home/aldespin/chatbot/data/chatbot.db",
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
@@ -27,7 +29,7 @@ def info_retrieve(type_id, user_id):
 @app.route('/<type_id>/<user_id>/conversation')
 def conversation_retrieve(type_id, user_id):
     bot = Chatbot(
-        database_file="/home/aldespin/chatbot/data/chatbot.db",
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
@@ -45,7 +47,7 @@ def response_for(type_id, user_id):
     #    return jsonify('/response_for request must have content_type == application/json')
 
     bot = Chatbot(
-        database_file="/home/aldespin/chatbot/data/chatbot.db",
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
@@ -59,7 +61,7 @@ def response_for(type_id, user_id):
 @app.route('/<type_id>/<user_id>/reset', methods=["DELETE"])
 def reset(type_id, user_id):
     bot = Chatbot(
-        database_file="/home/aldespin/chatbot/data/chatbot.db",
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
