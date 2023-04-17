@@ -1,0 +1,22 @@
+Pythonanywhere
+1) Account erstellen. Benutzername wird Teil der URL sein: [benutzername].pythonanywhere.com
+2) Web Applikation erstellen.
+3) Im Ordner der Web Applikation folgende Ordner erstellen: data/, static/, templates/
+Lokal
+4) In der Datei flask_app.py die Konstanten Benutzername und Webapname setzen
+5) In der Datei chatbot_db.py den openai API key setzen
+6) Mit dem Notebook (chatbot_client) einen neuen Bot erzeugen (erzeugt Datei chatbot.db im Ordner data/)
+Pythonanywhere
+7) Folgende Dateien raufladen:
+    - chatbot.js in Ordner static/
+    - index.html in Ordner templates/
+    - chatbot.db in Ordner data/
+    - chatbot_db.py, chatbot_db_helper.py, flask_app.py nach /
+8) Bash Console: pip install openai
+Lokal
+9) URL zum Chatbot im Browser eingeben
+
+Vorgehensideen wenn es nicht klappt:
+- Error Log anschauen
+- Änderungen vornehmen
+- Unter Web Applikationen grünen Button zum Neustart drücken
