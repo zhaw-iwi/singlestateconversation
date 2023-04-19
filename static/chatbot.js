@@ -26,7 +26,6 @@ function session_from_url() {
 
 function reset_conversation_view()  {
     $("#messages").empty();
-    start_assistant_istyping_temp();
 }
 
 function get_info() {
@@ -59,6 +58,7 @@ function show_conversation(conversation)    {
             $("#messages").append(current_message);
         }
     });
+    $("#user_says_input").prop('disabled', false);
     $('html,body').animate({scrollTop: document.body.scrollHeight}, 'slow');
 }
 
@@ -131,6 +131,7 @@ function user_says()    {
     if (!user_says_what) {
         return;
     }
+    $("#user_says_input").prop('disabled', true);
     $("#user_says_input").val("");
     show_user_says_incremental(user_says_what);
     start_assistant_istyping_temp()
@@ -144,6 +145,7 @@ function user_says()    {
 		success: function(data)	{
             stop_assistant_istyping_temp();
 			show_assistant_says_incremental(data.assistant_says);
+            $("#user_says_input").prop('disabled', false);
             $('html,body').animate({scrollTop: document.body.scrollHeight}, 'fast');
 		},
 		failure: function(errMsg) { alert(errMsg); }
@@ -154,7 +156,10 @@ function reset(event)    {
     event.preventDefault();
     sure = confirm("Willst Du den bisherigen Chatverlauf löschen?")
     if (sure)   {
+        $("#user_says_input").prop('disabled', true);
+        $("#user_says_input").val("");
         reset_conversation_view();
+        start_assistant_istyping_temp();
         $.ajax({
             type: "DELETE",
             url: "reset",
