@@ -59,7 +59,12 @@ function show_conversation(conversation)    {
         }
     });
     $("#user_says_input").prop('disabled', false);
-    $('html,body').animate({scrollTop: document.body.scrollHeight}, 'slow');
+    scroll_down();
+}
+
+function scroll_down()   {
+    //$('html,body').animate({scrollTop: document.body.scrollHeight / 2}, 'fast');
+    $("section")[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 }
 
 function show_user_says_incremental(user_says_what)    {
@@ -135,7 +140,7 @@ function user_says()    {
     $("#user_says_input").val("");
     show_user_says_incremental(user_says_what);
     start_assistant_istyping_temp()
-    $('html,body').animate({scrollTop: document.body.scrollHeight}, 'fast');
+    scroll_down();
     $.ajax({
 		type: "POST",
 		url: "response_for",
@@ -146,7 +151,7 @@ function user_says()    {
             stop_assistant_istyping_temp();
 			show_assistant_says_incremental(data.assistant_says);
             $("#user_says_input").prop('disabled', false);
-            $('html,body').animate({scrollTop: document.body.scrollHeight}, 'fast');
+            scroll_down();
 		},
 		failure: function(errMsg) { alert(errMsg); }
 	});
