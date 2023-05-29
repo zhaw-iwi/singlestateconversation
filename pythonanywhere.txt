@@ -1,22 +1,41 @@
-Pythonanywhere
-1) Account erstellen. Benutzername wird Teil der URL sein: [benutzername].pythonanywhere.com
-2) Web Applikation erstellen.
-3) Im Ordner der Web Applikation folgende Ordner erstellen: data/, static/, templates/
-Lokal
-4) In der Datei flask_app.py die Konstanten Benutzername und Webapname setzen
-5) In der Datei chatbot_db.py den openai API key setzen
-6) Mit dem Notebook (chatbot_client) einen neuen Bot erzeugen (erzeugt Datei chatbot.db im Ordner data/)
-Pythonanywhere
-7) Folgende Dateien raufladen:
-    - chatbot.js in Ordner static/
-    - index.html in Ordner templates/
-    - chatbot.db in Ordner data/
-    - chatbot_db.py, chatbot_db_helper.py, flask_app.py nach /
-8) Bash Console: pip install openai
-Lokal
-9) URL zum Chatbot im Browser eingeben
+<pythonanywhere>
+1) Create account
+    User name will be part of your URL: PYTHONANYWHERE_USERNAME.pythonanywhere.com
+2) Create web ppplication
+    - Python Web Framework: Flask
+    - Path: Optionally change ".../my_site/..." to meaningful PYTHONANYWHERE_WEBAPPNAME
+3) Create the following folders in the root folder of your web application
+    - data/
+    - static/
+    - templates/
+</pythonanywhere>
 
-Vorgehensideen wenn es nicht klappt:
-- Error Log anschauen
-- Änderungen vornehmen
-- Unter Web Applikationen grünen Button zum Neustart drücken
+<local>
+4) Edit file flask_app.py
+    - PYTHONANYWHERE_USERNAME
+    - PYTHONANYWHERE_WEBAPPNAME
+5) Edit file chatbot_db.py 
+    Set openai.api_key to your OpenAI API key
+6) Use notebook (chatbot_client)
+    Create a new bot (type, instance, welcome )
+    This will create/update file chatbot.db in your local folder data/
+</local>
+
+<pythonanywhere>
+7) Upload the following files
+    - chatbot.js to folder static/
+    - index.html to folder templates/
+    - chatbot.db to folder data/
+    - chatbot_db.py, chatbot_db_helper.py, flask_app.py to the root folder of your web application
+8) Bash Console: pip install openai
+</pythonanywhere>
+
+<local>
+9) Access your chatbot by entering the URL into your browser
+</local>
+
+If something doesn't work as expected
+- Reload web application
+    Navigate to your web application and press the green buttob to reload it (required for all changes except for content of static/)
+- Have a look at the Error Log
+    Make sure you can identify the latest error at the bottom of this file
