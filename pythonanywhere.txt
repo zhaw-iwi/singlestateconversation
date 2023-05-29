@@ -22,11 +22,11 @@
 </local>
 
 <pythonanywhere>
-7) Upload the following files
-    - chatbot.js to folder static/
-    - index.html to folder templates/
-    - chatbot.db to folder data/
-    - chatbot_db.py, chatbot_db_helper.py, flask_app.py to the root folder of your web application
+7) Upload the following files (from local to pythonanywhere)
+    - static/* to folder static/
+    - tmplates/index.html to folder templates/
+    - data/chatbot.db to folder data/
+    - /chatbot_db.py, /chatbot_db_helper.py, /flask_app.py to /
 8) Bash Console: pip install openai
 </pythonanywhere>
 
