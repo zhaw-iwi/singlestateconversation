@@ -64,7 +64,8 @@ function show_conversation(conversation)    {
 
 function scroll_down()   {
     //$('html,body').animate({scrollTop: document.body.scrollHeight / 2}, 'fast');
-    $("section")[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    //$("section")[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    $('html,body').animate({scrollTop: document.body.scrollHeight}, 'fast');
 }
 
 function show_user_says_incremental(user_says_what)    {
