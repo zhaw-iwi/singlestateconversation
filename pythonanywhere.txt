@@ -1,8 +1,8 @@
 <pythonanywhere>
 1) Create account
     User name will be part of your URL: PYTHONANYWHERE_USERNAME.pythonanywhere.com
-2) Create web ppplication
-    - Python Web Framework: Flask
+2) Create web application
+    - Python Web Framework: Flask, choose the latest version.
     - Path: Optionally change ".../my_site/..." to meaningful PYTHONANYWHERE_WEBAPPNAME
 3) Create the following folders in the root folder of your web application
     - data/
@@ -24,18 +24,19 @@
 <pythonanywhere>
 7) Upload the following files (from local to pythonanywhere)
     - static/* to folder static/
-    - tmplates/index.html to folder templates/
+    - templates/index.html to folder templates/
     - data/chatbot.db to folder data/
-    - /chatbot_db.py, /chatbot_db_helper.py, /flask_app.py to /
+    - /chatbot_db.py, /chatbot_db_helper.py, /flask_app.py to / (the root folder of our app)
 8) Bash Console: pip install openai
 </pythonanywhere>
 
 <local>
 9) Access your chatbot by entering the URL into your browser
+    - Example of format: https://[your pythonanywhere user name].pythonanywhere.com/[type id]/[user_id]/chat
 </local>
 
 If something doesn't work as expected
 - Reload web application
-    Navigate to your web application and press the green buttob to reload it (required for all changes except for content of static/)
+    Navigate to your web application and press the green button to reload it (required for all changes except for content of static/)
 - Have a look at the Error Log
     Make sure you can identify the latest error at the bottom of this file
