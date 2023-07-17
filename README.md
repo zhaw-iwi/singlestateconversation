@@ -12,7 +12,7 @@ This allows multiple chatbot types (e.g. a health coach and a learning assistant
 
 This can support the deployment of chatbots in a web backend (state-less). For example, the UUIDs of the type and instance can be read as URL parameters from a URL that users have received from you.
 
-A chatbot is created with the following arguments.
+A chatbot type and instance is created with the following arguments.
 - database_file: File of SQLite (in Folder data/)
 - type_id: Reference to chatbot type
 - instance_id: Reference to chatbot instance (typically one per user - however, may also be shared by multiple users)
