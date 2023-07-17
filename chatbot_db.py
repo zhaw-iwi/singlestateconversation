@@ -66,5 +66,13 @@ class Chatbot:
         self._append_assistant(assistant_says)
         return assistant_says
     
+    def get_bot_urls(self, username):
+        """Quality of life function to retrieve url for a given user.
+
+        Args:
+            username (str): username of the user to retrieve urls for, typically a uuid
+        """
+        self._db_helper.urls_retrieve(username)
+    
     def reset(self):
         self._db_helper.reset()
