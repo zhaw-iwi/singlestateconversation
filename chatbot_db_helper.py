@@ -140,15 +140,13 @@ class ChatbotDBHelper:
         cursor.execute("UPDATE " + ChatbotDBHelper._chatbot_session_table + " SET is_deleted = 1 WHERE type = \"" + self._type_id + "\" AND user = \"" + self._user_id + "\" AND is_deleted = 0")
         self._connection.commit()
     
-    def urls_retrieve(self, pythonanywhere_username):
-        """Retrieves all instances and users from the database.
-
-        Args:
-            pythonanywhere_username (_type_): _description_
-        """
+    def type_instances(self):
         cursor = self._connection
-        result = cursor.execute("SELECT type, user FROM " + ChatbotDBHelper._chatbot_instance_table)
+        result = cursor.execute("SELECT user FROM " + ChatbotDBHelper._chatbot_instance_table + " WHERE type = \"" + self._type_id + "\"")
         rows = result.fetchall()
+        result = []
         for row in rows:
-            print("https://{}.pythonanywhere.com/{}/{}/chat".format(pythonanywhere_username, row[0], row[1]))
+            result.append(row[0])
+        self._connection.commit()
+        return result
                                 
