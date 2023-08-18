@@ -3,8 +3,8 @@
 from flask import Flask,jsonify,request,render_template
 from chatbot_db import Chatbot
 
-PYTHONANYWHERE_USERNAME = "<ENTER YOUR PYTHONANYWHERE USERNAME HERE>"
-PYTHONANYWHERE_WEBAPPNAME = "<ENTER YOUR PYTHONANYWHERE WEBAPP NAME HERE>"
+PYTHONANYWHERE_USERNAME = "raaafael"
+PYTHONANYWHERE_WEBAPPNAME = "singlestate"
 
 app = Flask(__name__)
 

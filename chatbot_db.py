@@ -1,5 +1,5 @@
 import openai
-openai.api_key = "Your https://platform.openai.com/ API key here"
+openai.api_key = "placeholder"
 
 from chatbot_db_helper import ChatbotDBHelper
 
@@ -44,7 +44,8 @@ class Chatbot:
 
     def _openai(self):
         chat = openai.ChatCompletion.create(
-            model="gpt-4",
+            # model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=self._db_helper.messages_retrieve(with_system=True),
         )
         response = chat.choices[0].message.content
