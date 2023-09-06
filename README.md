@@ -7,6 +7,8 @@
 ### Application & Deployment
 To create your own bot and to deploy it on pythonanywhere follow the instructions in pythonanywhere.txt. Have a look at the code in the Notebook chatbot_client.ipynb to see how types and instances are created and used.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaw-iwi/singlestate_conversations/blob/main/chatbot_client.ipynb)
+
 ### Object-Oriented Chatbot using GPT and a Database
 This allows multiple chatbot types (e.g. a health coach and a learning assistant) to be created. Multiple chatbot instances can be created per chatbot type (e.g. a health coach for User X and another health coach for User Y). Both, type and instance are stored and referenced with an ID (e.g. with a UUID) in the database. Each instance has it's own chat state and history.
 
