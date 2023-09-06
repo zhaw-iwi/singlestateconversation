@@ -44,7 +44,7 @@ class Chatbot:
 
     def _openai(self):
         chat = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=self._db_helper.messages_retrieve(with_system=True),
         )
         response = chat.choices[0].message.content
