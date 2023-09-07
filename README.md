@@ -7,10 +7,10 @@
 ### Application & Deployment
 - Use the notebook **chatbot_client.ipynb** to create chatbot types and instances\
  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaw-iwi/singlestateconversation/blob/main/chatbot_client.ipynb)
-- Follow the instructions below to create and deploy a chatbot (on pythonanywhere)
+- Follow the instructions below to create a chatbot and deploy it (on pythonanywhere)
 
 ### Create & Deploy a Chatbot (pythonanywhere)
-Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
+Follow the 9 steps below to create a chatbot and deploy it on pythonanywhere
 
 `<pythonanywhere>`
 
@@ -35,7 +35,7 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 5. Create file chatbot/openai.py with the following content\
     OPENAI_KEY = "Your OpenAI API Key"\
     OPENAI_MODEL = "gpt-3.5-turbo-16k"\
-   (You may rename the file chatbot/openai_template.py to openai.py and set the key there)
+   (You may rename the file chatbot/openai_template.py to openai.py and set the keys there)
 7. Use notebook chatbot_client.jpynb\
     Create a new chatbot (type, instance, starter)\
     This will create/update file chatbot.db in the local folder database/
@@ -92,4 +92,4 @@ The following functions are meant to be used from an application (e.g. from cont
 Create file chatbot/apikey.py with the following content\
     OPENAI_KEY = "Your OpenAI API Key"\
     OPENAI_MODEL = "gpt-3.5-turbo-16k"\
-(You may rename the file chatbot/openai_template.py to openai.py and set the key there)
+(You may rename the file chatbot/openai_template.py to openai.py and set the keys there)
