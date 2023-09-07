@@ -5,10 +5,9 @@
 </picture>
 
 ### Application & Deployment
-- Use the notebook **chatbot_client.ipynb** to create chatbot types and instances.
+- Use the notebook **chatbot_client.ipynb** to create chatbot types and instances\
+ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaw-iwi/singlestateconversation/blob/main/chatbot_client.ipynb)
 - Follow the instructions below to create and deploy a chatbot (on pythonanywhere)
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaw-iwi/singlestateconversation/blob/main/chatbot_client.ipynb)
 
 ### Create & Deploy a Chatbot (pythonanywhere)
 Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
@@ -46,7 +45,7 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 7. Upload the following files (from local to pythonanywhere)
     - chatbot/chatbot.py, chatbot/persistence.py, chatbot/apikey.py, chatbot/\_\_init\_\_.py to folder chatbot/
     - database/chatbot.db to folder database/
-    - static/* to folder static/
+    - static/chatbot.js to folder static/
     - templates/index.html to folder templates/
     - /flask_app.py to / (the root folder of your web appliation)
 8. Bash Console: pip install openai
