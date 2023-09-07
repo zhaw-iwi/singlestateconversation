@@ -89,4 +89,5 @@ The following functions are meant to be used from an application (e.g. from cont
 #### OpenAI API Key
 
 Create file chatbot/apikey.py with the following content\
-    OPENAI_KEY = "Your OpenAI API Key"
+    OPENAI_KEY = "Your OpenAI API Key"\
+    OPENAI_MODEL = "gpt-3.5-turbo-16k"
