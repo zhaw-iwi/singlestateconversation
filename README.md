@@ -32,9 +32,10 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 4. Edit file flask_app.py and set the following values
     - PYTHONANYWHERE_USERNAME
     - PYTHONANYWHERE_WEBAPPNAME
-5. Create file chatbot/apikey.py with the following content\
-    OPENAI_KEY = "your OpenAI API key"
-6. Use notebook chatbot_client.jpynb\
+5. Create file chatbot/openai.py with the following content\
+    OPENAI_KEY = "your OpenAI API key"\
+    OPENAI_MODEL = "gpt-3.5-turbo-16k"
+7. Use notebook chatbot_client.jpynb\
     Create a new chatbot (type, instance, starter)\
     This will create/update file chatbot.db in the local folder database/
 
@@ -43,7 +44,7 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 `<pythonanywhere>`
 
 7. Upload the following files (from local to pythonanywhere)
-    - chatbot/chatbot.py, chatbot/persistence.py, chatbot/apikey.py, chatbot/\_\_init\_\_.py to folder chatbot/
+    - chatbot/chatbot.py, chatbot/persistence.py, chatbot/openai.py, chatbot/\_\_init\_\_.py to folder chatbot/
     - database/chatbot.db to folder database/
     - static/chatbot.js to folder static/
     - templates/index.html to folder templates/
@@ -88,4 +89,4 @@ The following functions are meant to be used from an application (e.g. from cont
 #### OpenAI API Key
 
 Create file chatbot/apikey.py with the following content\
-    OPENAI_KEY = "your OpenAI API key"
+    OPENAI_KEY = "Your OpenAI API Key"
