@@ -1,6 +1,7 @@
 from typing import Any
 import openai
-from .apikey import OPENAI_KEY
+from .openai import OPENAI_KEY
+from .openai import OPENAI_MODEL
 openai.api_key = OPENAI_KEY
 
 from .persistence import Persistence
@@ -46,7 +47,7 @@ class Chatbot:
 
     def _openai(self) -> str:
         chat = openai.ChatCompletion.create(
-            model="gpt-4",
+            model=OPENAI_MODEL,
             messages=self._persistence.messages_retrieve(with_system=True),
         )
         response: str = chat.choices[0].message.content
