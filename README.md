@@ -81,7 +81,7 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 `</local>`
 
 If something doesn't work as expected
-- Reload web application\
+- Reload web application: 
     Navigate to your web application and press the green button to reload it (required for all changes except for content in folder static/)
-- Have a look at the Error Log\
+- Have a look at the Error Log: 
     Study the latest error at the bottom of this file
