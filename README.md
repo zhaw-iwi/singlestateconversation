@@ -64,7 +64,7 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 `<pythonanywhere>`
 
 7. Upload the following files (from local to pythonanywhere)
-    - chatbot/chatbot.py, chatbot/persistence.py, chatbot/apikey.py to folder chatbot/
+    - chatbot/chatbot.py, chatbot/persistence.py, chatbot/apikey.py, chatbot/__init__.py to folder chatbot/
     - database/chatbot.db to folder database/
     - static/* to folder static/
     - templates/index.html to folder templates/
