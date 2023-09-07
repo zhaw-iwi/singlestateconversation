@@ -8,7 +8,7 @@
 - Use the notebook **chatbot_client.ipynb** to create chatbot types and instances.
 - Follow the instructions below to create and deploy a chatbot (on pythonanywhere)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaw-iwi/singlestateconversation/blob/main/google_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaw-iwi/singlestateconversation/blob/main/chatbot_client.ipynb)
 
 ### Create & Deploy a Chatbot (pythonanywhere)
 Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
