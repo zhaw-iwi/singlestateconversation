@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # API Key storage
-apikey.py
+openai.py
