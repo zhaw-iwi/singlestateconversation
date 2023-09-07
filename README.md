@@ -30,6 +30,11 @@ The following functions are meant to be used from an application (e.g. from cont
 - info_retrieve(): Returns the chatbot name, type role and instance context
 - reset(): Resets the conversation so far
 
+OpenAI API Key
+
+Create file chatbot/apikey.py with the following content\
+    OPENAI_KEY = "your OpenAI API key"
+
 ### Create & Deploy a Chatbot (pythonanywhere)
 Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 
