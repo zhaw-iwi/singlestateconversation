@@ -34,6 +34,7 @@ The following functions are meant to be used from an application (e.g. from cont
 Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 
 `<pythonanywhere>`
+
 1. Create account
     User name will be part of your URL: PYTHONANYWHERE_USERNAME.pythonanywhere.com
 2. Create web application
@@ -44,9 +45,11 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
     - database/
     - static/
     - templates/
+
 `</pythonanywhere>`
 
 `<local>`
+
 4. Edit file flask_app.py and set the following values
     - PYTHONANYWHERE_USERNAME
     - PYTHONANYWHERE_WEBAPPNAME
@@ -55,9 +58,11 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
 6. Use notebook chatbot_client.jpynb
     Create a new chatbot (type, instance, starter)
     This will create/update file chatbot.db in your local folder database/
+
 `</local>`
 
 `<pythonanywhere>`
+
 7. Upload the following files (from local to pythonanywhere)
     - chatbot/chatbot.py, chatbot/persistence.py, chatbot/apikey.py to folder chatbot/
     - database/chatbot.db to folder database/
@@ -65,11 +70,14 @@ Follow the 9 steps below to create and deploy a chatbot on pythonanywhere.
     - templates/index.html to folder templates/
     - /flask_app.py to / (the root folder of your web appliation)
 8. Bash Console: pip install openai
+
 `</pythonanywhere>`
 
 `<local>`
+
 9. Access your chatbot by entering the URL into your browser
     - Example of format: https://[your pythonanywhere user name].pythonanywhere.com/[type id]/[user_id]/chat
+
 `</local>`
 
 If something doesn't work as expected
