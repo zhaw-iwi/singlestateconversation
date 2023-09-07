@@ -1,16 +1,18 @@
+from typing import Any
 import openai
-openai.api_key = "Your https://platform.openai.com/ API key here"
+from .apikey import OPENAI_KEY
+openai.api_key = OPENAI_KEY
 
-from chatbot_db_helper import ChatbotDBHelper
+from .persistence import Persistence
 
 class Chatbot:
     
-    default_type_name = "Coach"
-    default_type_role = "Du bist ein achtsamer Coach. Du führst Gespräche mit einem Benutzer. Ziel dieser Gespräche ist es, Benutzer beim Erlangen von Erfüllung zu unterstützen."
-    default_instance_context = "Du führst jetzt solch ein Gespräch mit einem Benutzer. Du sprichst mit dem Benutzer in Du-Form. Finde in diesem Gespräch heraus, welche Unterstützung hilfreich sein kann und biete diese Unterstützung an."
-    default_instance_starter = "Erzeuge eine kurze Begrüssung, um das Gespräch mit dem Benutzer zu eröffnen."
+    default_type_name: str = "Grumpy Coach"
+    default_type_role: str = "You are a grumpy coach. You talk to a user even though you don't feel like it. Always be as brief as possible in all conversations."
+    default_instance_context: str = "You are now having a conversation with a user. Try to get rid of the user or support the user if you can't avoid it."
+    default_instance_starter: str = "Greet the user."
 
-    def __init__(self, database_file, type_id, user_id, type_name=None, type_role=None, instance_context=None, instance_starter=None):
+    def __init__(self, database_file: str, type_id: str, user_id: str, type_name: str=None, type_role: str=None, instance_context: str=None, instance_starter: str=None):
         
         if database_file is None:
             raise RuntimeError("a database file path must be provided")
@@ -26,7 +28,7 @@ class Chatbot:
         if (instance_context is not None or instance_starter is not None) and (instance_context is None or instance_starter is None):
             raise RuntimeError("if any of instance configuration is provided, then all of instance configurations must be provided")
 
-        self._db_helper = ChatbotDBHelper(
+        self._persistence: Persistence = Persistence(
             database=database_file,
             type_id=type_id,
             user_id=user_id,
@@ -36,42 +38,42 @@ class Chatbot:
             instance_starter=instance_starter
         )
 
-    def _append_assistant(self, content):
-        self._db_helper.message_save(ChatbotDBHelper._assistant_label, content)
+    def _append_assistant(self, content: str) -> None:
+        self._persistence.message_save(Persistence._assistant_label, content)
 
-    def _append_user(self, content):
-        self._db_helper.message_save(ChatbotDBHelper._user_label, content)
+    def _append_user(self, content: str) -> None:
+        self._persistence.message_save(Persistence._user_label, content)
 
-    def _openai(self):
+    def _openai(self) -> str:
         chat = openai.ChatCompletion.create(
             model="gpt-4",
-            messages=self._db_helper.messages_retrieve(with_system=True),
+            messages=self._persistence.messages_retrieve(with_system=True),
         )
-        response = chat.choices[0].message.content
+        response: str = chat.choices[0].message.content
         return response
 
-    def info_retrieve(self):
-        return self._db_helper.info_retrieve()
+    def info_retrieve(self) -> dict[str, str]:
+        return self._persistence.info_retrieve()
     
-    def conversation_retrieve(self, with_system=False):
-        return self._db_helper.messages_retrieve(with_system)
+    def conversation_retrieve(self, with_system: bool=False) -> list[dict[str, str]]:
+        return self._persistence.messages_retrieve(with_system)
 
-    def starter(self):
-        self._db_helper.starter_save()
-        response = self._openai()
+    def start(self) -> str:
+        self._persistence.starter_save()
+        response: str = self._openai()
         self._append_assistant(response)
         return response
 
-    def response_for(self, user_says):
+    def respond(self, user_says: str) -> str:
         if user_says is None:
             raise RuntimeError("user_says must not be None")
         self._append_user(user_says)
-        assistant_says = self._openai()
+        assistant_says: str = self._openai()
         self._append_assistant(assistant_says)
         return assistant_says
     
-    def reset(self):
-        self._db_helper.reset()
+    def reset(self) -> None:
+        self._persistence.reset()
 
     def type_instances(self):
-        return self._db_helper.type_instances()
+        return self._persistence.type_instances()

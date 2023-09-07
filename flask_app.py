@@ -1,7 +1,5 @@
-# A simple Flask chat app for you to get started with...
-
 from flask import Flask,jsonify,request,render_template
-from chatbot_db import Chatbot
+from chatbot.chatbot import Chatbot
 
 PYTHONANYWHERE_USERNAME = "<ENTER YOUR PYTHONANYWHERE USERNAME HERE>"
 PYTHONANYWHERE_WEBAPPNAME = "<ENTER YOUR PYTHONANYWHERE WEBAPP NAME HERE>"
@@ -10,34 +8,34 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "URL is missing type_id and user_id"
+    return "Ok. Your chatbot app is running. But the URL you used is missing the type_id and user_id path variables."
 
 @app.route('/<type_id>/<user_id>/chat')
-def chatbot(type_id, user_id):
+def chatbot(type_id: str, user_id: str):
     return render_template('index.html')
 
 @app.route('/<type_id>/<user_id>/info')
-def info_retrieve(type_id, user_id):
-    bot = Chatbot(
-        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
+def info_retrieve(type_id: str, user_id: str):
+    bot: Chatbot = Chatbot(
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/database/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
-    response = bot.info_retrieve()
+    response: dict[str, str] = bot.info_retrieve()
     return jsonify(response)
 
 @app.route('/<type_id>/<user_id>/conversation')
-def conversation_retrieve(type_id, user_id):
-    bot = Chatbot(
-        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
+def conversation_retrieve(type_id: str, user_id: str):
+    bot: Chatbot = Chatbot(
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/database/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
-    response = bot.conversation_retrieve()
+    response: list[dict[str, str]] = bot.conversation_retrieve()
     return jsonify(response)
 
 @app.route('/<type_id>/<user_id>/response_for', methods=["POST"])
-def response_for(type_id, user_id):
+def response_for(type_id: str, user_id: str):
 
     user_says = None
     #content_type = request.headers.get('Content-Type')
@@ -46,25 +44,25 @@ def response_for(type_id, user_id):
     #else:
     #    return jsonify('/response_for request must have content_type == application/json')
 
-    bot = Chatbot(
-        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
+    bot: Chatbot = Chatbot(
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/database/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
-    assistant_says = bot.response_for(user_says)
-    response = {
+    assistant_says: str = bot.respond(user_says)
+    response: dict[str, str] = {
         "user_says": user_says,
         "assistant_says": assistant_says
     }
     return jsonify(response)
 
 @app.route('/<type_id>/<user_id>/reset', methods=["DELETE"])
-def reset(type_id, user_id):
-    bot = Chatbot(
-        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/data/chatbot.db",
+def reset(type_id: str, user_id: str):
+    bot: Chatbot = Chatbot(
+        database_file="/home/" + PYTHONANYWHERE_USERNAME + "/" + PYTHONANYWHERE_WEBAPPNAME + "/database/chatbot.db",
         type_id=type_id,
         user_id=user_id
     )
     bot.reset()
-    response = bot.starter()
+    response: str = bot.start()
     return jsonify(response)
