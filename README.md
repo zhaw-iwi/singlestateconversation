@@ -14,12 +14,13 @@ Follow the 9 steps below to create a chatbot and deploy it on pythonanywhere
 
 `<pythonanywhere>`
 
-1. Create account\
+1. Create account at [pythonanywhere](https://www.pythonanywhere.com)\
+    [https://www.pythonanywhere.com/registration/register/beginner](https://www.pythonanywhere.com/registration/register/beginner)\
     User name will be part of your URL: PYTHONANYWHERE_USERNAME.pythonanywhere.com
-2. Create web application
+3. Create web application
     - Python Web Framework: Flask, choose the latest version.
     - Path: Optionally change ".../my_site/..." to meaningful PYTHONANYWHERE_WEBAPPNAME
-3. Create the following folders in the root folder of your web application
+4. Create the following folders in the root folder of your web application
     - chatbot/
     - database/
     - static/
