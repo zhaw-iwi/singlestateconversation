@@ -96,7 +96,7 @@ function get_assistant_message(content) {
     return $("<div>").addClass("d-flex flex-row justify-content-start mb-4").append(
         $("<i>").addClass("bi bi-emoji-sunglasses").attr("style", "font-size: 2rem;"),
         $("<div>").addClass("p-3 ms-3 border border-secondary").attr("style", "border-radius: 15px;").append(
-            $("<p>").addClass("small mb-0").text(content)
+            $("<p>").addClass("small mb-0").html(content)
         )
     );
 }
