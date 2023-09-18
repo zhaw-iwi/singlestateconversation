@@ -114,7 +114,7 @@ class Persistence:
 
     def _type_save(self, type_id: str, name: str, role: str) -> None:
         name_normalised: str = self._normalise(name)
-        role_normalised: str = self._normalise(role)
+        role_normalised: str = role  # TODO self._normalise(role)
         cursor = self._connection
         cursor.execute(
             "INSERT INTO "
