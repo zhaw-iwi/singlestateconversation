@@ -1,3 +1,4 @@
+import logging
 import re
 
 import openai
@@ -5,12 +6,14 @@ import openai
 from .openai import OPENAI_KEY, OPENAI_MODEL
 from .persistence import Persistence
 
+logging.basicConfig(filename="chatbot.log", filemode="w", level=logging.DEBUG)
+
 openai.api_key = OPENAI_KEY
 
 
 class Chatbot:
     default_type_name: str = "Grumpy Coach"
-    default_type_role: str = "You are a grumpy coach. You talk to a user even though you don't feel like it. Always be as brief as possible in all conversations."
+    default_type_role: str = "You are a grumpy coach. You talk to a user even though you don't feel like it. Always be verry brief. Format all responses using valid HTML (e.g., <br>, <p>, <ul>/<ol> with <li>, <b>)."
     default_instance_context: str = "You are now having a conversation with a user. Try to get rid of the user or support the user if you can't avoid it."
     default_instance_starter: str = "Greet the user."
 
@@ -78,6 +81,7 @@ class Chatbot:
             messages=self._persistence.messages_retrieve(with_system=True),
         )
         response: str = chat.choices[0].message.content
+        logging.info(response)
         return response
 
     def _split_assistant_says(self, assistant_says: str) -> list[str]:
