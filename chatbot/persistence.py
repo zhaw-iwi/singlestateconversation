@@ -64,7 +64,14 @@ class Persistence:
         self._user_id = user_id
 
     def _normalise(self, text: str) -> str:
-        return re.sub(r"\s+", " ", text).strip()
+        # return re.sub(r"\s+", " ", text).strip()
+        return text.strip()
+
+    def _cleanup(self, text: str) -> str:
+        # this can be used to do specific clean up
+        result = re.sub(r"(sudo\s|rm\s|-rf)", "", text)
+        result = re.sub(r'"', '', result)
+        return result
 
     def _ddl_save(self) -> None:
         cursor = self._connection
@@ -114,7 +121,7 @@ class Persistence:
 
     def _type_save(self, type_id: str, name: str, role: str) -> None:
         name_normalised: str = self._normalise(name)
-        role_normalised: str = role  # TODO self._normalise(role)
+        role_normalised: str = self._normalise(role)
         cursor = self._connection
         cursor.execute(
             "INSERT INTO "
@@ -258,14 +265,12 @@ class Persistence:
         )
         result = result.fetchone()
         self._connection.commit()
-        self.message_save(Persistence._sytem_label, result[0])
+        self.message_save(Persistence._sytem_label, result[0], cleanup=False)
 
-    def message_save(
-        self, who_says: str, says_what: str, normalise: bool = True
-    ) -> int:
-        says_what_normalised = says_what
-        if normalise:
-            says_what_normalised = self._normalise(says_what)
+    def message_save(self, who_says: str, says_what: str, cleanup: bool = True) -> int:
+        says_what_normalised = self._normalise(says_what)
+        if cleanup:
+            says_what_normalised = self._cleanup(says_what_normalised)
 
         statement = (
             "INSERT INTO "
