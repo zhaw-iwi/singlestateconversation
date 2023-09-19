@@ -1,7 +1,9 @@
 import re
-from .persistence import Persistence
-from .openai import OPENAI_KEY, OPENAI_MODEL
+
 import openai
+
+from .openai import OPENAI_KEY, OPENAI_MODEL
+from .persistence import Persistence
 
 openai.api_key = OPENAI_KEY
 
@@ -78,8 +80,9 @@ class Chatbot:
         response: str = chat.choices[0].message.content
         return response
 
-    def _split_assistant_says(assistant_says: str) -> list[str]:
-        # TODO this is a first step towards supporting multiple responses
+    def _split_assistant_says(self, assistant_says: str) -> list[str]:
+        # happily generated with ChatGPT :-)
+
         # Regular expression to match <p>, <ul>, and <ol> elements
         pattern = re.compile(r"<p>.*?</p>|<ul>.*?</ul>|<ol>.*?</ol>")
 
@@ -117,17 +120,21 @@ class Chatbot:
 
     def start(self) -> str:
         self._persistence.starter_save()
-        response: str = self._openai()
-        self._append_assistant(response)
-        return response
+        assistant_says: str = self._openai()
+        assistant_says_list: list[str] = self._split_assistant_says(assistant_says)
+        for assistant_says_list_entry in assistant_says_list:
+            self._append_assistant(assistant_says_list_entry)
+        return assistant_says_list
 
-    def respond(self, user_says: str) -> str:
+    def respond(self, user_says: str) -> list[str]:
         if user_says is None:
             raise RuntimeError("user_says must not be None")
         self._append_user(user_says)
         assistant_says: str = self._openai()
-        self._append_assistant(assistant_says)
-        return assistant_says
+        assistant_says_list: list[str] = self._split_assistant_says(assistant_says)
+        for assistant_says_list_entry in assistant_says_list:
+            self._append_assistant(assistant_says_list_entry)
+        return assistant_says_list
 
     def reset(self) -> None:
         self._persistence.reset()

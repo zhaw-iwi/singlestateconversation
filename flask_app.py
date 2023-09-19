@@ -1,9 +1,9 @@
-import re
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, render_template, request
+
 from chatbot.chatbot import Chatbot
 
-PYTHONANYWHERE_USERNAME = "<ENTER YOUR PYTHONANYWHERE USERNAME HERE>"
-PYTHONANYWHERE_WEBAPPNAME = "<ENTER YOUR PYTHONANYWHERE WEBAPP NAME HERE>"
+PYTHONANYWHERE_USERNAME = "carvice"
+PYTHONANYWHERE_WEBAPPNAME = "mysite"
 
 app = Flask(__name__)
 
@@ -66,10 +66,10 @@ def response_for(type_id: str, user_id: str):
         type_id=type_id,
         user_id=user_id,
     )
-    assistant_says: str = bot.respond(user_says)
+    assistant_says_list: list[str] = bot.respond(user_says)
     response: dict[str, str] = {
         "user_says": user_says,
-        "assistant_says": assistant_says,
+        "assistant_says": assistant_says_list,
     }
     return jsonify(response)
 
@@ -86,5 +86,8 @@ def reset(type_id: str, user_id: str):
         user_id=user_id,
     )
     bot.reset()
-    response: str = bot.start()
+    assistant_says_list: list[str] = bot.start()
+    response: dict[str, str] = {
+        "assistant_says": assistant_says_list,
+    }
     return jsonify(response)
