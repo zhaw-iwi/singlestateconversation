@@ -117,18 +117,97 @@ function get_assistant_message(content) {
 }
 
 function get_assistant_istyping_message() {
-    return $("<div>").addClass("temporary d-flex flex-row justify-content-start mb-4").append($("<i>").addClass("bi bi-emoji-sunglasses").attr("style", "font-size: 2rem;"), $("<div>").addClass("p-3 ms-3 border border-secondary").attr("style", "border-radius: 15px;").append($("<p>").addClass("small mb-0").append($("<i>").addClass("bi bi-chat-dots").attr("id", "istyping_icon"))));
+    return $("<div>").addClass("temporary d-flex flex-row justify-content-start mb-4").append($("<i>").addClass("bi bi-emoji-sunglasses").attr("style", "font-size: 2rem;"), $("<div>").addClass("p-3 ms-3 border border-secondary").attr("style", "border-radius: 15px;").append($("<p>").addClass("small mb-0").append($("<i>").addClass("bi bi-chat aaa").attr("id", "istyping_icon"))));
 }
 
-function animate_istyping() {
-    if ($("#istyping_icon").hasClass("bi-chat-dots")) {
-        $("#istyping_icon").removeClass("bi-chat-dots");
-        $("#istyping_icon").addClass("bi-chat-dots-fill");
-    } else {
-        $("#istyping_icon").removeClass("bi-chat-dots-fill");
-        $("#istyping_icon").addClass("bi-chat-dots");
-    }
 
+var istyping_icons = [
+    "bi bi-chat aaa",
+    "bi bi-chat-fill aaa",
+    "bi bi-chat bbb",
+    "bi bi-chat-fill bbb",
+    "bi bi-chat ccc",
+    "bi bi-chat-fill ccc",
+    "bi bi-chat-dots aaa",
+    "bi bi-chat-dots-fill aaa",
+    "bi bi-chat-dots bbb",
+    "bi bi-chat-dots-fill bbb",
+    "bi bi-chat-dots ccc",
+    "bi bi-chat-dots-fill ccc",
+    "bi bi-chat-text aaa",
+    "bi bi-chat-text-fill aaa",
+    "bi bi-chat-text bbb",
+    "bi bi-chat-text-fill bbb",
+    "bi bi-chat-text ccc",
+    "bi bi-chat-text-fill ccc",
+    "bi bi-chat-quote aaa",
+    "bi bi-chat-quote-fill aaa",
+    "bi bi-chat-quote bbb",
+    "bi bi-chat-quote-fill bbb",
+    "bi bi-chat-quote ccc",
+    "bi bi-chat-quote-fill ccc",
+    "bi bi-chat-heart aaa",
+    "bi bi-chat-heart-fill aaa",
+    "bi bi-chat-heart bbb",
+    "bi bi-chat-heart-fill bbb",
+    "bi bi-chat-heart ccc",
+    "bi bi-chat-heart-fill ccc",
+    "bi bi-chat-stopwatch aaa",
+    "bi bi-chat-stopwatch-fill aaa",
+    "bi bi-chat-stopwatch bbb",
+    "bi bi-chat-stopwatch-fill bbb",
+    "bi bi-chat-stopwatch ccc",
+    "bi bi-chat-stopwatch-fill ccc",
+    "bi bi-hourglass-top",
+    "bi bi-hourglass-split",
+    "bi bi-hourglass-bottom",
+    "bi bi-hourglass",
+    "bi bi-alarm aaa",
+    "bi bi-alarm-fill aaa",
+    "bi bi-alarm bbb",
+    "bi bi-alarm-fill bbb",
+    "bi bi-alarm ccc",
+    "bi bi-alarm-fill ccc",
+    "bi bi-bell aaa",
+    "bi bi-bell-fill aaa",
+    "bi bi-bell bbb",
+    "bi bi-bell-fill bbb",
+    "bi bi-bell ccc",
+    "bi bi-bell-fill ccc",
+    "bi bi-emoji-smile",
+    "bi bi-emoji-smile-fill",
+    "bi bi-emoji-neutral",
+    "bi bi-emoji-neutral-fill",
+    "bi bi-emoji-expressionless",
+    "bi bi-emoji-expressionless-fill",
+    "bi bi-emoji-dizzy",
+    "bi bi-emoji-dizzy-fill",
+    "bi bi-emoji-grimace",
+    "bi bi-emoji-grimace-fill",
+    "bi bi-emoji-astonished",
+    "bi bi-emoji-astonished-fill",
+    "bi bi-emoji-angry",
+    "bi bi-emoji-angry-fill",
+    "bi bi-emoji-frown",
+    "bi bi-emoji-frown-fill",
+    "bi bi-emoji-tear",
+    "bi bi-emoji-tear-fill",
+    "bi bi-heartbreak",
+    "bi bi-heartbreak-fill",
+    "bi bi-bi-heart-pulse",
+    "bi bi-bi-heart-pulse-fill",
+    "bi bi-bi-heart-fill",
+    "bi bi-bi-heart-half",
+    "bi bi-bi-heart"
+];
+
+function animate_istyping() {
+
+    let current_icon_index = istyping_icons.indexOf($("#istyping_icon").attr("class"));
+    let new_icon_index = (current_icon_index + 1) % istyping_icons.length;
+
+    $("#istyping_icon").removeClass(istyping_icons[current_icon_index]);
+    $("#istyping_icon").addClass(istyping_icons[new_icon_index]);
 }
 
 function get_user_message(content) {
