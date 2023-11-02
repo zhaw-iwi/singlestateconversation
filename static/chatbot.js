@@ -285,5 +285,5 @@ function reset(event) {
 
 function info(event) {
     event.preventDefault();
-    alert("Role\n" + session.role + "\nContext\n" + session.context);
+    alert("Für viele Menschen ist das Ausfüllen der Steuererklärung mit Schwierigkeiten verbunden. Mit unserem Experiment suchen wir nach Möglichkeiten, die Steuerkompetenz in der Bevölkerung zu erhöhen. Mit deiner Teilnahme leistest du einen wichtigen Beitrag daran, den Steuerprozess der Zukunft zu verbessern.");
 }
