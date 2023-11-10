@@ -76,7 +76,7 @@ class Chatbot:
         self._persistence.message_save(Persistence._user_label, content)
 
     def _openai(self) -> str:
-        chat = openai.ChatCompletion.create(
+        chat = openai.chat.completions.create(
             model=OPENAI_MODEL,
             messages=self._persistence.messages_retrieve(with_system=True),
         )
