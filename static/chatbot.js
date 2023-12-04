@@ -285,5 +285,5 @@ function reset(event) {
 
 function info(event) {
     event.preventDefault();
-    alert("Role\n" + session.role + "\nContext\n" + session.context);
+    alert("Fabulex ist ein empathischer Chatbot, der eine Brücke zwischen Technologie und menschlicher Kreativität schlagen will.\n" + "Beruf: Chatbot\n" + "Sprachen: Alle, versuchs!\n" + "Interessen: Literatur, Psychologie\n" + "Stärke: Empathie\n" + "Schwächen: Lange Antworten\n");
 }
