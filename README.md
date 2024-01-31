@@ -24,7 +24,7 @@ Follow the 9 steps below to create a chatbot and deploy it on pythonanywhere.
 4. Create a web application (in the Web tab)
     - Python Web Framework: Flask, choose the latest version.
     - Path: Optionally change ".../my_site/..." to meaningful PYTHONANYWHERE_WEBAPPNAME
-5. Create a Bash console (in the Consoles tab) and enter the following commands:
+5. Start a Bash console (in the Consoles tab) and enter the following commands:
     - `pip install openai`
     - `cd mysite` &rarr; if you have a different PYTHONANYWHERE_WEBAPPNAME, replace ***mysite*** with yours.
     - `rm -r *`
@@ -33,7 +33,7 @@ Follow the 9 steps below to create a chatbot and deploy it on pythonanywhere.
 6. Edit file **flask_app.py** (in the Files tab) and set the following values.\
     PYTHONANYWHERE_USERNAME\
     PYTHONANYWHERE_WEBAPPNAME
-7. Rename the file **chatbot/openai_template.py** to **chatbot/openai.py** and set the following keys.\
+7. Edit the file **chatbot/openai_template.py** and save it as **chatbot/openai.py**. Set the following keys.\
     OPENAI_KEY = "Your OpenAI API Key in quotes"\
     OPENAI_MODEL = "Model name in quotes, e.g. gpt-3.5-turbo-16k"
 8. Upload the database file **database/chatbot.db** you downloaded from GitHub Codespaces (Step 2) into the folder **database/**.
@@ -45,9 +45,9 @@ https://[PYTHONANYWHERE_USERNAME].pythonanywhere.com/[type_id]/[user_id]/chat
 
 #### If something doesn't work as expected
 - Reload your Web Application:\
-Navigate to your web application and press the green button to reload it (required for all changes except for content in folder database/ and static/)
+Navigate to your web application (in the Web tab) and press the green button to reload it (required for all changes except for content in folder database/ and static/)
 - Have a look at the Error Log:\
-Study the latest error at the bottom of this file
+Navigate to your web application (in the Web tab) and scroll down to the Log files. Study the latest error at the bottom of the Error log.
 
 ## A Chatbot using GPT and a Database
 This allows multiple chatbot types (e.g. a health coach and a learning assistant) to be created. Multiple chatbot instances can be created per chatbot type (e.g. a health coach for user X and user Y, and a learning assistant for user P and user Q). Both, types and instances are stored with and referenced by an ID (e.g. a UUID) in the database.
