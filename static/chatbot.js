@@ -1,3 +1,5 @@
+var maxNoOfChars = 1000;
+
 var istyping_icons = [
     "bi bi-chat aaa",
     "bi bi-chat-fill aaa",
@@ -171,6 +173,20 @@ function scroll_down() {
     $('html,body').animate({
         scrollTop: document.body.scrollHeight
     }, 'fast');
+
+    progressbar();
+}
+
+function progressbar() {
+    var currentNoOfChars = 0;
+    $(".usersays").each(function(i, currentP)  {
+        currentNoOfChars += $(currentP).text().length;
+    })
+    currentPercentage = Math.round(currentNoOfChars * 10 / maxNoOfChars) * 10;
+    if (currentPercentage > 100) {
+        currentPercentage = 100;
+    }
+    $("#progress").width(currentPercentage + "%");
 }
 
 function show_user_says_incremental(user_says_what) {
@@ -233,7 +249,8 @@ function animate_istyping() {
 }
 
 function get_user_message(content) {
-    return $("<div>").addClass("d-flex flex-row justify-content-end mb-4").append($("<div>").addClass("p-3 me-3 border border-secondary").attr("style", "border-radius: 15px;").append($("<p>").addClass("small mb-0").text(content)), $("<i>").addClass("bi bi-person-bounding-box").attr("style", "font-size: 2rem;"));
+    // @progressbar watch out: if you change class usersays you need to fix the counting of user chars for the progress bar
+    return $("<div>").addClass("d-flex flex-row justify-content-end mb-4").append($("<div>").addClass("p-3 me-3 border border-secondary").attr("style", "border-radius: 15px;").append($("<p>").addClass("small mb-0 usersays").text(content)), $("<i>").addClass("bi bi-person-bounding-box").attr("style", "font-size: 2rem;"));
 }
 
 function user_says() {
