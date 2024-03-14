@@ -297,6 +297,19 @@ class Persistence:
         )
         self._connection.commit()
 
+    def resetDb(self) -> None:
+        cursor = self._connection
+        cursor.execute(
+            "DELETE FROM chatbot_instances"
+        )
+        cursor.execute(
+            "DELETE FROM chatbot_sessions"
+        )
+        cursor.execute(
+            "DELETE FROM chatbot_types"
+        )
+        self._connection.commit()
+
     def type_instances(self) -> list[str]:
         cursor = self._connection
         result = cursor.execute(

@@ -143,5 +143,8 @@ class Chatbot:
     def reset(self) -> None:
         self._persistence.reset()
 
+    def resetDb(self) -> None:
+        self._persistence.resetDb()
+
     def type_instances(self):
         return self._persistence.type_instances()
